@@ -72,25 +72,47 @@ def footballscore(score):
                 dp[i][j] = dp[i][j - current_point]
             if i > 0:
                 dp[i][j] += dp[i - 1][j]
-    pm(dp)
+
     return dp[-1][-1]
 
 
 # print(footballscore(12))
 
 
-def climbstairs(n, k):
-    # choices i to k steps per attempts
-    dp = [[0 for j in range(0, n + 1)] for i in range(1, k + 1)]
-    for i in range(0, k):
-        dp[i][0] = 1
-        current_step = i + 1
-        for j in range(1, n + 1):
-            if j >= current_step:
-                dp[i][j] = dp[i][j - current_step]
-            if i > 0:
-                dp[i][j] += dp[i - 1][j]
-    pm(dp)
+def climbstairs(n):
+    if n == 1 or n == 2:
+        return n
+    minus_2 = 1
+    minus_1 = 2
+    for i in range(3, n + 1):
+        m = minus_1 + minus_2
+        minus_2 = minus_1
+        minus_1 = m
+    return m
 
 
-print(climbstairs(3, 2))
+# print(climbstairs(4))
+
+def levensteindistance(word1, word2):
+    print(word1)
+    print(word2)
+
+    dp = [[0 for _ in range(0, len(word2) + 1)] for _ in range(0, len(word1) + 1)]
+    for i in range(len(word1) + 1):
+        for j in range(len(word2) + 1):
+            if i == 0:
+                dp[i][j] = j
+            elif j == 0:
+                dp[i][j] = i
+            else:
+                currentletter = word1[i-1]
+                if currentletter == word2[j-1]:
+                    dp[i][j] = dp[i - 1][j - 1]
+                else:
+                    dp[i][j] = 1 + min(dp[i - 1][j - 1], min(dp[i][j - 1], dp[i - 1][j]))
+
+    #pm(dp)
+    return dp[-1][-1]
+
+
+print(levensteindistance('Saturday', 'Sundays'))
