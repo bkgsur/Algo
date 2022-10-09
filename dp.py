@@ -105,14 +105,32 @@ def levensteindistance(word1, word2):
             elif j == 0:
                 dp[i][j] = i
             else:
-                currentletter = word1[i-1]
-                if currentletter == word2[j-1]:
+                currentletter = word1[i - 1]
+                if currentletter == word2[j - 1]:
                     dp[i][j] = dp[i - 1][j - 1]
                 else:
                     dp[i][j] = 1 + min(dp[i - 1][j - 1], min(dp[i][j - 1], dp[i - 1][j]))
 
-    #pm(dp)
+    # pm(dp)
     return dp[-1][-1]
 
 
-print(levensteindistance('Saturday', 'Sundays'))
+# print(levensteindistance('Saturday', 'Sundays'))
+
+def waytoend(n, m):
+    dp = [[0 for _ in range(m)] for _ in range(n)]
+
+    def helper(x, y):
+        if x == 0 and y == 0:
+            return 1
+        if dp[x][y] == 0:
+            ways_from_top = 0 if x == 0 else helper(x - 1, y)
+            ways_from_left = 0 if y == 0 else helper(x, y - 1)
+            dp[x][y] = ways_from_top + ways_from_left
+        pm(dp)
+        return dp[x][y]
+
+    return helper(n - 1, m - 1)
+
+
+print(waytoend(5, 5))
