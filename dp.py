@@ -1,4 +1,5 @@
 import itertools
+import enchant
 
 
 def pm(a):
@@ -167,17 +168,49 @@ def pattern_in_matix(A, S):
 
 # print(pattern_in_matix([[1, 2, 3], [3, 4, 5], [5, 6, 7]], [1, 3, 4, 6]))
 
-def knapsack(items, capacity):
+def knapsack(itemsvalue, itemsWeight, capacity):
     def helper(k, available_capacity):
-        if k<=0
+        if available_capacity <= 0 or k < 0:
             return 0
-        if dp[k][available_capacity]==-1:
-            wi
-        return True
+        print(k, available_capacity)
+        if dp[k][available_capacity] == -1:
+            with_item = 0 if available_capacity < itemsWeight[k] else itemsvalue[k] + helper(k, available_capacity -
+                                                                                             itemsWeight[k])
+            without_item = helper(k - 1, available_capacity)
+            dp[k][available_capacity] = max(with_item, without_item)
+        return dp[k][available_capacity]
 
-    dp = [[-1 for _ in range(capacity + 1)] for _ in range(len(items))]
-    pm(dp)
-    return helper(len(items) - 1, capacity)
+    dp = [[-1 for _ in range(capacity + 1)] for _ in range(len(itemsvalue))]
+    # pm(dp)
+    return helper(ldecomposeen(itemsvalue) - 1, capacity)
 
 
-print(knapsack([60, 50, 70, 30], 5))
+# print(knapsack([60, 50, 70, 30], [5, 3, 4, 2], 5))
+
+def breakupwords(s):
+    d = enchant.Dict("en_US")
+    valid_word_length = [-1 for _ in range(len(s))]
+    print(s, len(s))
+    for i in range(len(s)):
+        if d.check(s[:i + 1]):
+            valid_word_length[i] = i + 1
+        if valid_word_length[i] == -1:
+            for j in range(i):
+                if valid_word_length[j] != 1 and d.check(s[j + 1:i + 1]):
+                    valid_word_length[i] = i - j
+                    break
+    print(valid_word_length)
+    decompose = []
+    if valid_word_length[-1] != -1:
+        idx = len(s) - 1
+        while idx >= 0:
+            print(idx + 1,idx + 1 - valid_word_length[idx],s[idx + 1 - valid_word_length[idx]:idx + 1])
+            decompose.append(s[idx + 1 - valid_word_length[idx]:idx + 1])
+            idx -= valid_word_length[idx]
+
+        decompose = decompose[::-1]
+
+    print(decompose)
+
+
+breakupwords('bedbathandbeyond.com')
