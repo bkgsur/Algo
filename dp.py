@@ -133,4 +133,51 @@ def waytoend(n, m):
     return helper(n - 1, m - 1)
 
 
-print(waytoend(5, 5))
+# print(waytoend(5, 5))
+
+def choose_x(n, k):
+    def helper(x, y):
+        if y in (0, x):
+            return 1
+        if dp[x][y] == 0:
+            without_x = helper(x - 1, y)
+            with_x = helper(x - 1, y - 1)
+            dp[x][y] = without_x + with_x
+        return dp[x][y]
+
+    dp = [[0 for _ in range(0, k + 1)] for _ in range(0, n + 1)]
+    return helper(n, k)
+
+
+# print(choose_x(5, 2))
+
+def pattern_in_matix(A, S):
+    def helper(x, y, offset):
+        if len(S) == offset:
+            return True
+        if (0 <= x < len(A)) and (0 <= y < len(A[x])) and (
+                A[x][y] == S[offset] and ((x, y, offset) not in visited)) and any(
+            helper(x + a, y + b, offset + 1) for (a, b) in ((0, 1), (0, -1), (1, 0), (-1, 0))):
+            return True
+        visited.add((x, y, offset))
+
+    visited = set()
+    return any(helper(i, j, 0) for i in range(len(A)) for j in range(len(A[i])))
+
+
+# print(pattern_in_matix([[1, 2, 3], [3, 4, 5], [5, 6, 7]], [1, 3, 4, 6]))
+
+def knapsack(items, capacity):
+    def helper(k, available_capacity):
+        if k<=0
+            return 0
+        if dp[k][available_capacity]==-1:
+            wi
+        return True
+
+    dp = [[-1 for _ in range(capacity + 1)] for _ in range(len(items))]
+    pm(dp)
+    return helper(len(items) - 1, capacity)
+
+
+print(knapsack([60, 50, 70, 30], 5))
