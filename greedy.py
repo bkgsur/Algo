@@ -11,7 +11,7 @@ def coinchange(amount):
     change = 0
     p = [100, 25, 10, 5, 1]
     for i in p:
-        if (i <= amount):
+        if i <= amount:
             change += amount // i
             amount = amount % i
     return change
@@ -46,7 +46,7 @@ def leastvisit(intervals):
     least_visit_time = float('-inf')
     numvisit = 0
     for interval in intervals:
-        if (least_visit_time < interval.l):
+        if least_visit_time < interval.l:
             numvisit += 1
             least_visit_time = interval.r
     return numvisit

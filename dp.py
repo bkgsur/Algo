@@ -196,7 +196,7 @@ def breakupwords(s):
             valid_word_length[i] = i + 1
         if valid_word_length[i] == -1:
             for j in range(i):
-                if valid_word_length[j] != 1 and d.check(s[j + 1:i + 1]):
+                if valid_word_length[j] != -1 and d.check(s[j + 1:i + 1]):
                     valid_word_length[i] = i - j
                     break
     print(valid_word_length)

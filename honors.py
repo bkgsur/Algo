@@ -14,4 +14,15 @@ def gcd(x, y):
         return gcd(x, y - x)
 
 
-print(gcd(24, 300))
+#print(gcd(24, 300))
+
+def missingpositive(A):
+
+    for i in range(len(A)):
+        while 1 <= A[i] <= len(A) and A[i] != A[A[i] - 1]:
+            A[A[i]-1], A[i]= A[i],  A[A[i]-1]
+
+    return next((i + 1 for i, a in enumerate(A) if a != i + 1), len(A) + 1)
+
+
+print(missingpositive([3, 5, 4, -1, 5, 1, -1]))
