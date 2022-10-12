@@ -1,3 +1,6 @@
+import functools
+
+
 def pm(a):
     s = [[str(e) for e in row] for row in a]
     lens = [max(map(len, col)) for col in zip(*s)]
@@ -24,7 +27,7 @@ def gcd(x, y):
 
 #print(gcd(24, 300))
 
-def missingpositive(A):
+def missingleastpositive(A):
 
     for i in range(len(A)):
         while 1 <= A[i] <= len(A) and A[i] != A[A[i] - 1]:
@@ -33,7 +36,7 @@ def missingpositive(A):
     return next((i + 1 for i, a in enumerate(A) if a != i + 1), len(A) + 1)
 
 
-#print(missingpositive([3, 5, 4, -1, 5, 1, -1]))
+#print(missingleastpositive([3, 5, 4, -1, 5, 1, -1]))
 
 #https://www.youtube.com/watch?v=Pw6lrYANjz4
 def buysellk(prices,k):
@@ -60,4 +63,35 @@ def buysellk(prices,k):
     pm(profits)
     return profits[-1][-1]
 
-print(buysellk([5,11,3,50,60,90],2))
+#print(buysellk([5,11,3,50,60,90],2))
+
+def maxproductminusone(A):
+    least_neg_index=None
+    highest_neg_index=None
+    least_non_neg_Index=None
+    number_of_negatives =0
+    for i in range(len(A)):
+        current=  A[i]
+        if current<0:
+            number_of_negatives+=1
+            if least_neg_index is None or A[least_neg_index]>current:
+                least_neg_index = i
+            if highest_neg_index is None or  A[highest_neg_index]< current:
+                highest_neg_index=i
+        else:
+            if least_non_neg_Index is None or A[least_non_neg_Index]>current:
+                least_non_neg_Index = i
+    idx_to_skip=None
+    if number_of_negatives ==0:
+        idx_to_skip = least_non_neg_Index
+    else:
+        if number_of_negatives%2==0: # if even
+            idx_to_skip = least_non_neg_Index
+            if least_non_neg_Index is None: # All numbers negative
+                idx_to_skip = highest_neg_index
+        else: #if odd
+            idx_to_skip = least_neg_index
+
+    return functools.reduce( lambda  p,a: p*a , (a for i,a in enumerate(A) if i !=idx_to_skip), 1)
+
+print(maxproductminusone([3,2,-1,4,-1,6]))
