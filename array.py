@@ -3,6 +3,7 @@ import itertools
 
 # fixed window
 def maxsubarray(A, k):
+    #sub array with max sum of size k
     maxsum = 0
     if len(A) < k or k <= 0:
         return 0
