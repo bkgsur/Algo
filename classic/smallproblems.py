@@ -1,7 +1,9 @@
-from typing import Dict,Tuple
+import functools
+from typing import Dict, Tuple
 from functools import lru_cache
 from sys import getsizeof
 from secrets import token_bytes
+
 
 # 0, 1, 1, 2, 3, 5, 8, 13, 21...
 def fib(n: int) -> int:
@@ -75,37 +77,54 @@ class CompressedGene:
 
 
 def testcompression():
-    s = "TAGGGATTAACCGTTATATATATATAGCCATGGATCGATTATATAGGGATTAACCGTTATATATATATAGCCATGGATCGATTATA"*100
-    compressed: CompressedGene  = CompressedGene(s)
-    #print(compressed.bit_string)
-    ds= compressed._decompress()
+    s = "TAGGGATTAACCGTTATATATATATAGCCATGGATCGATTATATAGGGATTAACCGTTATATATATATAGCCATGGATCGATTATA" * 100
+    compressed: CompressedGene = CompressedGene(s)
+    # print(compressed.bit_string)
+    ds = compressed._decompress()
     print(ds)
-    print(s==ds, getsizeof(compressed.bit_string),getsizeof(ds),(getsizeof(compressed.bit_string)/getsizeof(ds))*100)
+    print(s == ds, getsizeof(compressed.bit_string), getsizeof(ds),
+          (getsizeof(compressed.bit_string) / getsizeof(ds)) * 100)
 
 
-#testcompression()
+# testcompression()
 
 class simpleencrypt:
-    byteorder:str = 'big'
-    key:int = None
-    input:str=None
-    def __init__(self,S:str):
-        self.key = int.from_bytes(token_bytes(len(S)),self.byteorder)
+    byteorder: str = 'big'
+    key: int = None
+    input: str = None
+
+    def __init__(self, S: str):
+        self.key = int.from_bytes(token_bytes(len(S)), self.byteorder)
         self.input = S
-    def encrypt(self)-> int:
-        return int.from_bytes(self.input.encode(),self.byteorder)^self.key
-    def decrypt(self,product:int)->str:
-        extracted:int = product^self.key
-        return extracted.to_bytes((extracted.bit_length()+7)//8,self.byteorder).decode()
+
+    def encrypt(self) -> int:
+        return int.from_bytes(self.input.encode(), self.byteorder) ^ self.key
+
+    def decrypt(self, product: int) -> str:
+        extracted: int = product ^ self.key
+        return extracted.to_bytes((extracted.bit_length() + 7) // 8, self.byteorder).decode()
 
 
-
-def testsimpleencrypt(S:str)->None:
+def testsimpleencrypt(S: str) -> None:
     print(S)
     se: simpleencrypt = simpleencrypt(S)
-    print('Y') if S == se.decrypt(se.encrypt()) else  print('N',output)
+    output: str = se.decrypt(se.encrypt())
+    print('Y') if S == output else print('N', output)
 
 
+# testsimpleencrypt('i am done!')
 
-testsimpleencrypt('i am done!')
 
+# using leibniz formula to calculate PI
+#https://en.wikipedia.org/wiki/Leibniz_formula_for_%CF%80
+def calculatepi(n: int) -> float:
+    pi: float = 0
+
+    items: [float] = [(4 / (1 + ((i - 1) * 2))) * (-1 if i % 2 == 0 else 1) for i in
+                      range(1, n + 1)]
+    pi = functools.reduce(lambda a1, a2: a1 + a2, items, 0)
+
+    return pi
+
+
+print(calculatepi(1000000))
