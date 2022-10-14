@@ -1,14 +1,6 @@
 import itertools
 import enchant
-
-
-def pm(a):
-    s = [[str(e) for e in row] for row in a]
-    lens = [max(map(len, col)) for col in zip(*s)]
-    fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
-    table = [fmt.format(*row) for row in s]
-    print('\n'.join(table))
-    print('=============================')
+import helper
 
 
 def thievery(houses):
@@ -28,7 +20,7 @@ def thievery(houses):
 h = [2, 7, 9, 3, 1]
 
 
-# print(thievery(h))
+#print(thievery(h))
 
 
 def fib(n):
@@ -62,6 +54,7 @@ def footballscore(score):
     points = [2, 3, 7]
     # make matrix to hold combos
     dp = [[0 for _ in range(score + 1)] for j in range(len(points))]
+    helper.pm(dp)
     for i in range(len(dp)):
         dp[i][0] = 1
         current_point = points[i]
@@ -77,7 +70,7 @@ def footballscore(score):
     return dp[-1][-1]
 
 
-# print(footballscore(12))
+print(footballscore(12))
 
 
 def climbstairs(n):
