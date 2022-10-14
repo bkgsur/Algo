@@ -118,4 +118,4 @@ def maxcontiguousincreasingsubarray(A):
     return maxi, maxj
 
 
-print(maxcontiguousincreasingsubarray([2, 11, 3, 5, 13, 7, 19, 17, 23]))
+print(maxcontiguousincreasingsubarray([21, 1111, 13, 15, 113, 117, 119, 17, 23]))
