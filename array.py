@@ -19,6 +19,7 @@ def maxsubarray(A, k):
 
 # sliding window
 def smallestsubarraySize(A, k):
+    #smallest sub array of sum value k
     i = 0
     j = 0
     minlength = 0

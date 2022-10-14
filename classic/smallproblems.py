@@ -1,7 +1,7 @@
-from typing import Dict
+from typing import Dict,Tuple
 from functools import lru_cache
 from sys import getsizeof
-
+from secrets import token_bytes
 
 # 0, 1, 1, 2, 3, 5, 8, 13, 21...
 def fib(n: int) -> int:
@@ -77,10 +77,35 @@ class CompressedGene:
 def testcompression():
     s = "TAGGGATTAACCGTTATATATATATAGCCATGGATCGATTATATAGGGATTAACCGTTATATATATATAGCCATGGATCGATTATA"*100
     compressed: CompressedGene  = CompressedGene(s)
-    print(compressed.bit_string)
+    #print(compressed.bit_string)
     ds= compressed._decompress()
     print(ds)
     print(s==ds, getsizeof(compressed.bit_string),getsizeof(ds),(getsizeof(compressed.bit_string)/getsizeof(ds))*100)
 
 
-testcompression()
+#testcompression()
+
+class simpleencrypt:
+    byteorder:str = 'big'
+    key:int = None
+    input:str=None
+    def __init__(self,S:str):
+        self.key = int.from_bytes(token_bytes(len(S)),self.byteorder)
+        self.input = S
+    def encrypt(self)-> int:
+        return int.from_bytes(self.input.encode(),self.byteorder)^self.key
+    def decrypt(self,product:int)->str:
+        extracted:int = product^self.key
+        return extracted.to_bytes((extracted.bit_length()+7)//8,self.byteorder).decode()
+
+
+
+def testsimpleencrypt(S:str)->None:
+    print(S)
+    se: simpleencrypt = simpleencrypt(S)
+    print('Y') if S == se.decrypt(se.encrypt()) else  print('N',output)
+
+
+
+testsimpleencrypt('i am done!')
+
