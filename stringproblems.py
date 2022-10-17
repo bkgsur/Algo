@@ -1,11 +1,23 @@
 import functools
 import string
-
+from  collections import  deque
 def ispalindromic(S):
-    return all(S[i] == S[~i] for i in range(len(S)//2))
+    i=0
+    j = len(S)-1
+    while i<=j:
+        while S[i].isalnum() == False and i<j:
+            i+=1
+        while not S[j].isalnum() and i<j:
+            j-=1
+        if S[i] != S[j]:
+            return False
+        i+=1
+        j-=1
+    return True
 
 
-#print(ispalindromic('abccba1'))
+
+# print(ispalindromic('abc cb a'))
 
 
 def inttostring(x):
@@ -49,7 +61,7 @@ def baseconversion(S:string,b1:int,b2:int)->str:
 
     return '-' if is_negative else constructfrombase(num_as_int,b2)
 
-print(baseconversion('615',10,13))
+# print(baseconversion('615',10,13))
 
 def spreadsheetdecode(C):
     return functools.reduce(lambda a,b: a*26 + ord(b) - ord('A')+1 ,C,0)
@@ -91,3 +103,62 @@ A= ['a','c','d','b','b','c','a']
 # print(replaceandreduce(A,7))
 
 
+def reversewords(S:list[chr])->list[chr]:
+    S= S[::-1]
+    print(S)
+    start=0
+    def reverseword(S:list[chr], start:int, end:str) -> None:
+        while start<=end:
+            S[start], S[end] = S[end], S[start]
+            start+=1
+            end-=1
+
+    i=0
+    for i in range(0, len(S)):
+        if S[i] == " ":
+            #print(start,i-1)
+            reverseword(S, start, i-1)
+            start = i+1
+    #print(start,len(S)-1)
+    reverseword(S, start, len(S)-1)
+    return S
+
+# print(reversewords(list("Bob likes Alice")))
+
+
+QWERTY_MAPPING = ('0', '1', 'ABC', 'DEF', 'GHI', 'lKL', 'llNO', 'PQRS', 'TUV', 'IJXYZ')
+# time complexity is O(4"n).
+def phonemnemonic(phonenumber:str) -> [[str]]:
+    #Tuple -  a collection which is ordered and unchangeable.
+
+    def phonemnemonichelper(digit:int)->None:
+        if digit == len(phonenumber):
+            mnemonics.append(''.join(partial_mnemonic))
+        else:
+            for c in QWERTY_MAPPING[int(phonenumber[digit])]:
+                partial_mnemonic[digit]=c
+                phonemnemonichelper(digit+1)
+
+    mnemonics, partial_mnemonic= [],[0] * len(phonenumber)
+    phonemnemonichelper(0)
+    return mnemonics
+
+def phonemnemonic1(phonenumber:str) -> [[str]]:
+    l =[]
+    q = deque()
+    q.append('')
+    while len(q)>0:
+        s= q.pop()
+
+        if len(s) == len(phonenumber):
+            l.append(s)
+        else:
+            for c in QWERTY_MAPPING[int(phonenumber[len(s)])]:
+                q.append(s+c)
+    return l
+
+
+
+# print(phonemnemonic("2276696"))
+# print('---------------------')
+phonemnemonic1("2276696")
