@@ -119,3 +119,22 @@ def maxcontiguousincreasingsubarray(A):
 
 
 print(maxcontiguousincreasingsubarray([21, 1111, 13, 15, 113, 117, 119, 17, 23]))
+
+def shiftarraybyk(A: [int], k: int) -> [int]:
+    k = k % len(A)
+
+    def reverse(l, r):
+        while l < r:
+            A[l], A[r] = A[r], A[l]
+            l, r = l + 1, r - 1
+
+    # first reverse elements in array
+    reverse(0, len(A) - 1)
+    # reverse first k elements
+    reverse(0, k - 1)
+    # reversE the rest
+    reverse(k, len(A) - 1)
+    return A
+
+
+print(shiftarraybyk([1, 2, 3, 4, 5, 6], 14))

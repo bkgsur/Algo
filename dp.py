@@ -3,9 +3,13 @@ import enchant
 import helper
 
 
+# https://www.geeksforgeeks.org/find-maximum-possible-stolen-value-houses/
+# There are N houses built in a line, each of which contains some value in it.
+# A thief is going to steal the maximal value of these houses, but he can’t steal in two adjacent houses because the owner of the stolen houses
+# will tell his two neighbors left and right sides. The task is to find what is the maximum stolen value.
 def thievery(houses):
     without_current = 0
-
+    # print(houses)
     for i in range(len(houses) - 1, -1, -1):
 
         with_current = houses[i]
@@ -14,13 +18,14 @@ def thievery(houses):
         if i + 1 < len(houses):
             without_current = houses[i + 1]
         houses[i] = max(with_current, without_current)
+        # print(i,houses)
     return houses[0]
 
 
 h = [2, 7, 9, 3, 1]
 
 
-#print(thievery(h))
+# print(thievery(h))
 
 
 def fib(n):
@@ -38,7 +43,7 @@ def fib(n):
 # print(fib(10))
 
 
-def maxsubarray(A):
+def maxsubarraysum(A):
     min_sum = max_sum = 0
     for running_sum in itertools.accumulate(A):
         min_sum = min(min_sum, running_sum)
@@ -47,7 +52,7 @@ def maxsubarray(A):
     return max_sum
 
 
-# print(maxsubarray([-904, -40, -523, -12, -335, -385, -124, -481, -31]))
+# print(maxsubarraysum([-904, -40, -523, -12, -335, -385, -124, -481, -31]))
 
 
 def footballscore(score):
@@ -70,7 +75,7 @@ def footballscore(score):
     return dp[-1][-1]
 
 
-print(footballscore(12))
+# print(footballscore(12))
 
 
 def climbstairs(n):
@@ -197,7 +202,7 @@ def breakupwords(s):
     if valid_word_length[-1] != -1:
         idx = len(s) - 1
         while idx >= 0:
-            print(idx + 1,idx + 1 - valid_word_length[idx],s[idx + 1 - valid_word_length[idx]:idx + 1])
+            print(idx + 1, idx + 1 - valid_word_length[idx], s[idx + 1 - valid_word_length[idx]:idx + 1])
             decompose.append(s[idx + 1 - valid_word_length[idx]:idx + 1])
             idx -= valid_word_length[idx]
 
@@ -206,4 +211,6 @@ def breakupwords(s):
     print(decompose)
 
 
-breakupwords('bedbathandbeyond.com')
+# breakupwords('bedbathandbeyond.com')
+
+
