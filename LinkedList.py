@@ -57,8 +57,36 @@ def test():
     print(l)
     l.deleteafter(5)
     print(l)
-test()
+# test()
 
 
-# def mergell(l1:ll)
+def mergell(l1:LinkedList,l2:LinkedList)->LinkedList:
+    n:ListNode=ListNode()
+    ll: LinkedList = LinkedList()
+
+    h1:ListNode = l1.head
+    h2:ListNode = l2.head
+
+    while  h1 and h2:
+        if h1.data<h2.data:
+            n.next = h1
+            h1 = h1.next
+        else:
+            n.next = h2
+            h2= h2.next
+        n = n.next
+        if ll.head is None:
+            ll.head = n
+    n.next = h1 or h2
+
+    return ll
+
+l1 = LinkedList()
+l1.create(d= [1,3,5,7,8])
+l2 = LinkedList()
+l2.create(d =[2,4,6,8])
+lmerged = mergell(l1,l2)
+print(lmerged)
+
+
 
