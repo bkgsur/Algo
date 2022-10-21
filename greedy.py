@@ -1,10 +1,10 @@
 import collections
 import math
 import operator
-import sys
+
 import numpy as np
 
-print(sys.version)
+
 
 
 def coinchange(amount):

@@ -22,7 +22,7 @@ class LinkedList:
             d = [1,2,3,4,5,6]
         self.head=None
         if d :
-            n = ListNode(data=d.pop(0))
+            n:ListNode = ListNode(data=d.pop(0))
             self.head = n
             while d:
                 n.next = ListNode(data=d.pop(0))
@@ -59,6 +59,14 @@ def test():
     print(l)
 # test()
 
+l1 = LinkedList()
+l1.create(d= [1,3,5,7,9,11,13,15])
+l2 = LinkedList()
+l2.create(d =[2,4,6,8,10,12,14])
+l3 = LinkedList()
+l3.create(d= [ i for i in range(1,15)])
+
+
 
 def mergell(l1:LinkedList,l2:LinkedList)->LinkedList:
     n:ListNode=ListNode()
@@ -81,12 +89,24 @@ def mergell(l1:LinkedList,l2:LinkedList)->LinkedList:
 
     return ll
 
-l1 = LinkedList()
-l1.create(d= [1,3,5,7,8])
-l2 = LinkedList()
-l2.create(d =[2,4,6,8])
-lmerged = mergell(l1,l2)
-print(lmerged)
+# print(mergell(l1,l2))
+
+def reversesublist(ll:LinkedList, s:int,f:int)->LinkedList:
+    dummyhead = sublisthead= ll.head
+    if ll.head:
+        for _ in range(2, s):
+            sublisthead = sublisthead.next
+
+        sublistiter:ListNode = sublisthead.next
+        for _ in range(f-s):
+            temp:ListNode = sublistiter.next
+            sublistiter.next, temp.next,  sublisthead.next = (temp.next, sublisthead.next, temp)
+        ll.head = dummyhead
+    return ll
+
+print(reversesublist(l3,4,7))
+
+
 
 
 
