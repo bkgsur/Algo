@@ -1,5 +1,5 @@
 import itertools
-
+import random
 
 # fixed window
 def maxsubarray(A, k):
@@ -61,4 +61,22 @@ def longestuniquechars(S, k):
     return maxlength
 
 
-print(longestuniquechars(['A', 'A', 'A', 'H', 'H', 'I', 'B', 'C'], 2))
+# print(longestuniquechars(['A', 'A', 'A', 'H', 'H', 'I', 'B', 'C'], 2))
+
+
+def evenodd(A:[int])->None:
+    evenindex=0
+    oddindex= len(A)-1
+    while evenindex<=oddindex:
+        if A[evenindex]%2 ==0: # even number
+            evenindex+=1
+        else: # odd number
+            A[evenindex], A[oddindex] = A[oddindex], A[evenindex]
+            oddindex-=1
+
+A= [ random.randint(1,50) for i in range(11)]
+print(A)
+evenodd(A)
+print(A)
+
+

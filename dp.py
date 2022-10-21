@@ -9,23 +9,28 @@ import helper
 # will tell his two neighbors left and right sides. The task is to find what is the maximum stolen value.
 def thievery(houses):
     without_current = 0
-    # print(houses)
+    with_current =0
+    print(houses)
     for i in range(len(houses) - 1, -1, -1):
 
         with_current = houses[i]
+        # add value from the house after next
         if i + 2 < len(houses):
             with_current += houses[i + 2]
+            # get value from next house
         if i + 1 < len(houses):
             without_current = houses[i + 1]
+        # use existing array to store max value
         houses[i] = max(with_current, without_current)
-        # print(i,houses)
+        if(i==0):
+            print(houses)
     return houses[0]
 
 
 h = [2, 7, 9, 3, 1]
 
 
-# print(thievery(h))
+# print('max theft value: ',thievery(h))
 
 
 def fib(n):
@@ -170,7 +175,7 @@ def knapsack(itemsvalue, itemsWeight, capacity):
     def helper(k, available_capacity):
         if available_capacity <= 0 or k < 0:
             return 0
-        print(k, available_capacity)
+        # print(k, available_capacity)
         if dp[k][available_capacity] == -1:
             with_item = 0 if available_capacity < itemsWeight[k] else itemsvalue[k] + helper(k, available_capacity -
                                                                                              itemsWeight[k])
@@ -180,15 +185,38 @@ def knapsack(itemsvalue, itemsWeight, capacity):
 
     dp = [[-1 for _ in range(capacity + 1)] for _ in range(len(itemsvalue))]
     # pm(dp)
-    return helper(ldecomposeen(itemsvalue) - 1, capacity)
+    return helper(len(itemsvalue) - 1, capacity)
 
 
-# print(knapsack([60, 50, 70, 30], [5, 3, 4, 2], 5))
+def knapsack1(itemsvalue, itemsWeight, capacity):
+    items = len(itemsvalue)
+    #print(d)
+    finalmax =0
+
+    for i in range(items):
+        currentMax = 0
+        k = capacity
+        if itemsWeight[i] <=k:
+            currentMax += itemsvalue[i]
+            k -= itemsWeight[i]
+            for j  in range(items):
+                if j != i and  itemsWeight[j] <=k:
+                    currentMax += itemsvalue[j]
+                    k -= itemsWeight[j]
+
+        finalmax = max(finalmax,currentMax)
+    return finalmax
+print(knapsack([60, 50, 70, 30], [5, 3, 4, 2], 5))
+print(knapsack1([60, 50, 70, 30], [5, 3, 4, 2], 5))
+
+
+
 
 def breakupwords(s):
+    print('input: ' ,s, len(s))
     d = enchant.Dict("en_US")
     valid_word_length = [-1 for _ in range(len(s))]
-    print(s, len(s))
+
     for i in range(len(s)):
         if d.check(s[:i + 1]):
             valid_word_length[i] = i + 1
