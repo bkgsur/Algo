@@ -9,7 +9,7 @@ import helper
 # will tell his two neighbors left and right sides. The task is to find what is the maximum stolen value.
 def thievery(houses):
     without_current = 0
-    with_current =0
+    with_current = 0
     print(houses)
     for i in range(len(houses) - 1, -1, -1):
 
@@ -22,7 +22,7 @@ def thievery(houses):
             without_current = houses[i + 1]
         # use existing array to store max value
         houses[i] = max(with_current, without_current)
-        if(i==0):
+        if (i == 0):
             print(houses)
     return houses[0]
 
@@ -190,30 +190,30 @@ def knapsack(itemsvalue, itemsWeight, capacity):
 
 def knapsack1(itemsvalue, itemsWeight, capacity):
     items = len(itemsvalue)
-    #print(d)
-    finalmax =0
+    # print(d)
+    finalmax = 0
 
     for i in range(items):
         currentMax = 0
         k = capacity
-        if itemsWeight[i] <=k:
+        if itemsWeight[i] <= k:
             currentMax += itemsvalue[i]
             k -= itemsWeight[i]
-            for j  in range(items):
-                if j != i and  itemsWeight[j] <=k:
+            for j in range(items):
+                if j != i and itemsWeight[j] <= k:
                     currentMax += itemsvalue[j]
                     k -= itemsWeight[j]
 
-        finalmax = max(finalmax,currentMax)
+        finalmax = max(finalmax, currentMax)
     return finalmax
+
+
 print(knapsack([60, 50, 70, 30], [5, 3, 4, 2], 5))
 print(knapsack1([60, 50, 70, 30], [5, 3, 4, 2], 5))
 
 
-
-
 def breakupwords(s):
-    print('input: ' ,s, len(s))
+    print('input: ', s, len(s))
     d = enchant.Dict("en_US")
     valid_word_length = [-1 for _ in range(len(s))]
 
@@ -238,7 +238,4 @@ def breakupwords(s):
 
     print(decompose)
 
-
 # breakupwords('bedbathandbeyond.com')
-
-
