@@ -1,9 +1,10 @@
 import itertools
 import random
 
+
 # fixed window
 def maxsubarray(A, k):
-    #sub array with max sum of size k
+    # sub array with max sum of size k
     maxsum = 0
     if len(A) < k or k <= 0:
         return 0
@@ -19,7 +20,7 @@ def maxsubarray(A, k):
 
 # sliding window
 def smallestsubarraySize(A, k):
-    #smallest sub array of sum value k
+    # smallest sub array of sum value k
     i = 0
     j = 0
     minlength = 0
@@ -64,19 +65,38 @@ def longestuniquechars(S, k):
 # print(longestuniquechars(['A', 'A', 'A', 'H', 'H', 'I', 'B', 'C'], 2))
 
 
-def evenodd(A:[int])->None:
-    evenindex=0
-    oddindex= len(A)-1
-    while evenindex<=oddindex:
-        if A[evenindex]%2 ==0: # even number
-            evenindex+=1
-        else: # odd number
+def evenodd(A: [int]) -> None:
+    evenindex = 0
+    oddindex = len(A) - 1
+    while evenindex <= oddindex:
+        if A[evenindex] % 2 == 0:  # even number
+            evenindex += 1
+        else:  # odd number
             A[evenindex], A[oddindex] = A[oddindex], A[evenindex]
-            oddindex-=1
+            oddindex -= 1
 
-A= [ random.randint(1,50) for i in range(11)]
-print(A)
-evenodd(A)
-print(A)
 
+# A= [ random.randint(1,50) for i in range(11)]
+# print(A)
+# evenodd(A)
+# print(A)
+
+def dutchflag(A:[int], pindex: int) -> None:
+    p = A[pindex]
+    print(A,p)
+    smallest, middle, largest = 0, 0,  len(A) - 1
+    while middle <= largest:
+        if A[middle] < p:
+            A[smallest], A[middle] = A[middle], A[smallest]
+            smallest += 1
+            middle += 1
+        elif A[middle] == p:
+            middle += 1
+        else:
+            A[middle], A[largest] = A[largest], A[middle]
+            largest -= 1
+
+# A = [0,1,2,0,2,1,1]
+# dutchflag(A,1)
+# print(A)
 
