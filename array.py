@@ -81,10 +81,10 @@ def evenodd(A: [int]) -> None:
 # evenodd(A)
 # print(A)
 
-def dutchflag(A:[int], pindex: int) -> None:
+def dutchflag(A: [int], pindex: int) -> None:
     p = A[pindex]
-    print(A,p)
-    smallest, middle, largest = 0, 0,  len(A) - 1
+    print(A, p)
+    smallest, middle, largest = 0, 0, len(A) - 1
     while middle <= largest:
         if A[middle] < p:
             A[smallest], A[middle] = A[middle], A[smallest]
@@ -96,7 +96,21 @@ def dutchflag(A:[int], pindex: int) -> None:
             A[middle], A[largest] = A[largest], A[middle]
             largest -= 1
 
+
 # A = [0,1,2,0,2,1,1]
 # dutchflag(A,1)
 # print(A)
 
+
+def incrementby1(A: [int]) -> None:
+    A[-1] += 1
+    for i in reversed(range(1, len(A))):
+        if A[i] == 10:
+            A[i - 1] += 1
+            A[i] = 0
+    if A[0] == 10:
+        A[0] = 1
+        A.append(0)
+# A = [9, 9, 9]
+# incrementby1(A)
+# print(A)
