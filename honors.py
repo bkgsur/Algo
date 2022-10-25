@@ -1,13 +1,6 @@
+import collections
 import functools
-
-
-def pm(a):
-    s = [[str(e) for e in row] for row in a]
-    lens = [max(map(len, col)) for col in zip(*s)]
-    fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
-    table = [fmt.format(*row) for row in s]
-    print('\n'.join(table))
-    print('=============================')
+import helper
 
 
 def gcd(x, y):
@@ -118,7 +111,7 @@ def maxcontiguousincreasingsubarray(A):
     return maxi, maxj
 
 
-print(maxcontiguousincreasingsubarray([21, 1111, 13, 15, 113, 117, 119, 17, 23]))
+# print(maxcontiguousincreasingsubarray([21, 1111, 13, 15, 113, 117, 119, 17, 23]))
 
 def shiftarraybyk(A: [int], k: int) -> [int]:
     k = k % len(A)
@@ -137,4 +130,29 @@ def shiftarraybyk(A: [int], k: int) -> [int]:
     return A
 
 
-print(shiftarraybyk([1, 2, 3, 4, 5, 6], 14))
+# print(shiftarraybyk([1, 2, 3, 4, 5, 6], 14))
+
+subarray = collections.namedtuple('subarray', ('start', 'end'))
+
+
+def longestincreasingsubarray(A: [int]) -> subarray:
+    print(A)
+    result = subarray(0, 0)
+    i, maxlength = 0, 1
+    while i < len(A) - maxlength:
+        for j in range(i + maxlength, i, -1):
+            if A[j - 1] >= A[j]:
+                i = j
+                break
+        # This else executes only if break is NEVER
+        # reached and loop terminated after all iterations.
+        else:
+            print(i, maxlength, 'else reached')
+            i += maxlength
+            while i < len(A) and A[i - 1] < A[i]:
+                i, maxlength = i + 1, maxlength + 1
+            result = subarray(i - maxlength, i - 1)
+    return result
+
+
+# print(longestincreasingsubarray([2, 11, 3, 5, 13, 7, 19, 17, 23]))
