@@ -74,9 +74,35 @@ def evenodd(A:[int])->None:
             A[evenindex], A[oddindex] = A[oddindex], A[evenindex]
             oddindex-=1
 
-A= [ random.randint(1,50) for i in range(11)]
-print(A)
-evenodd(A)
-print(A)
+# A= [ random.randint(1,50) for i in range(11)]
+# print(A)
+# evenodd(A)
+# print(A)
 
+
+def incrementbyone(A:[int])->None:
+    A[-1]+=1
+
+    for i in range(len(A)-1,0,-1):
+        print(A, i, A[i])
+        if A[i]==10:
+            A[i-1]+=1
+            A[i]=0
+    if(A[0]==10):
+        A[0]=1
+        A.append(0)
+
+# A = [9,9,9]
+# print(A)
+# incrementbyone(A)
+# print(A)
+
+def multiply(n1:[int],n2:[int])->[int]:
+    result = [0]* (len(n1)+ len(n2))
+    print(result, len(result))
+    for i in reversed(range(len(n1))):
+        for j in reversed(range(len(n2))):
+            print(i,j,i+j+1)
+
+multiply([1,2,3],[4,5,6])
 
