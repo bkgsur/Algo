@@ -1,8 +1,11 @@
 import functools
-from typing import Dict, Tuple
+from typing import Dict, Tuple, TypeVar, Generic, List, cast
 from functools import lru_cache
 from sys import getsizeof
 from secrets import token_bytes
+
+
+T = TypeVar('T')
 
 
 # 0, 1, 1, 2, 3, 5, 8, 13, 21...
@@ -116,7 +119,7 @@ def testsimpleencrypt(S: str) -> None:
 
 
 # using leibniz formula to calculate PI
-#https://en.wikipedia.org/wiki/Leibniz_formula_for_%CF%80
+# https://en.wikipedia.org/wiki/Leibniz_formula_for_%CF%80
 def calculatepi(n: int) -> float:
     pi: float = 0
 
@@ -127,4 +130,51 @@ def calculatepi(n: int) -> float:
     return pi
 
 
-print(calculatepi(1000000))
+# print(calculatepi(1000000))
+
+# Tower of Hanoi
+class towerofhanoi(Generic[T]):
+    class tower(Generic[T]):
+        def __init__(self) -> None:
+            self._container: List[T] = []
+
+        def push(self, item: T) -> None:
+            self._container.append(item)
+
+        def pop(self) -> T:
+            return self._container.pop()
+
+        def __repr__(self) -> str:
+            return repr(self._container)
+
+    def __init__(self):
+
+        self.tower_c: towerofhanoi.tower[T] = None
+        self.tower_b: towerofhanoi.tower[T] = None
+        self.tower_a: towerofhanoi.tower[T] = None
+        self.n: int = None
+
+    def build(self, num_discs: int = 3):
+        self.n = num_discs
+        self.tower_a = self.tower()
+        self.tower_b = self.tower()
+        self.tower_c = self.tower()
+        for i in range(1, self.n + 1):
+            self.tower_a.push(cast(T, i))
+
+    def move(self, start: tower[T], end: tower[T], temp: tower[T], n: int) -> None:
+        if n == 1:
+            end.push(start.pop())
+        else:
+            self.move(start, temp, end, n - 1)
+            self.move(start, end, temp, 1)
+            self.move(temp, end, start, n - 1)
+
+    def test(self) -> None:
+        self.build()
+        self.move(self.tower_a, self.tower_c, self.tower_b, self.n)
+
+
+t: towerofhanoi[chr] = towerofhanoi()
+t.test()
+print(t.tower_a, t.tower_c, t.tower_b)
