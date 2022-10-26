@@ -175,6 +175,6 @@ class towerofhanoi(Generic[T]):
         self.move(self.tower_a, self.tower_c, self.tower_b, self.n)
 
 
-t: towerofhanoi[chr] = towerofhanoi()
-t.test()
-print(t.tower_a, t.tower_c, t.tower_b)
+# t: towerofhanoi[chr] = towerofhanoi()
+# t.test()
+# print(t.tower_a, t.tower_c, t.tower_b)
