@@ -18,12 +18,15 @@ class CSP(Generic[V, D]):
     def __init__(self, variables: List[V], domains: Dict[V, List[D]]) -> None:
         self.variables: List[V] = variables
         self.domains: Dict[V, List[D]] = domains
-        self.constraints: Dict[V:List[Constraint[V, D]]] = []
+        self.constraints: Dict[V, List[Constraint[V, D]]] = {}
 
         for variable in self.variables:
-            self.constraints[V] = []
+            self.constraints[variable] = []
             if variable not in self.domains:
                 raise LookupError("Domain not available for variable {v}".format(v=variable))
+
+    def __repr__(self) -> str:
+        return "v={},d={},c={}".format(self.variables, self.domains, str(self.constraints))
 
     def addconstraint(self, constraint: Constraint[V, D]) -> None:
         for variable in constraint.variables:
@@ -38,7 +41,7 @@ class CSP(Generic[V, D]):
                 return False
         return True
 
-    def solution(self, vassignment: Dict[V, D]) -> Optional[Dict[V, D]]:
+    def solution(self, vassignment: Dict[V, D] = {}) -> Optional[Dict[V, D]]:
         if len(vassignment) == len(self.variables):
             return vassignment
         unassignedvars: List[V] = [v for v in self.variables if v not in vassignment]
