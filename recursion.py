@@ -5,7 +5,7 @@ def n_queen(n: int) -> [[int]]:
             return
         else:
             for col in range(n):
-                if all(abs(col-c) not in (0, row - i) for i, c in enumerate(col_placement[:row])):
+                if all(abs(col - c) not in (0, row - i) for i, c in enumerate(col_placement[:row])):
                     col_placement[row] = col
                     helper(row + 1)
 
@@ -16,4 +16,21 @@ def n_queen(n: int) -> [[int]]:
     return result
 
 
-print(n_queen(4))
+# print(n_queen(4))
+
+
+def allpermutations(A: [int]) -> [[int]]:
+    def helper(i: int) -> None:
+        if i == len(A) - 1:
+            result.append(A.copy())
+        for j in range(i, len(A)):
+            A[i], A[j] = A[j], A[i]
+            helper(i + 1)
+            A[i], A[j] = A[j], A[i]
+
+    result: [[int]] = []
+    helper(0)
+    return result
+
+
+print(allpermutations([2, 3, 5, 7]))
