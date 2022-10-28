@@ -21,7 +21,7 @@ def n_queen(n: int) -> [[int]]:
 
 def allpermutations(A: [int]) -> [[int]]:
     def helper(i: int) -> None:
-        if i == len(A) - 1:
+        if i == len(A):
             result.append(A.copy())
         for j in range(i, len(A)):
             A[i], A[j] = A[j], A[i]
@@ -32,5 +32,6 @@ def allpermutations(A: [int]) -> [[int]]:
     helper(0)
     return result
 
-
-print(allpermutations([2, 3, 5, 7]))
+A= [2, 3, 5, 7]
+p = allpermutations(A)
+print(len(p),p)
