@@ -10,27 +10,21 @@ import helper
 def thievery(houses):
     without_current = 0
     with_current = 0
-    print(houses)
     for i in range(len(houses) - 1, -1, -1):
-
+        # with current
         with_current = houses[i]
         # add value from the house after next
         if i + 2 < len(houses):
             with_current += houses[i + 2]
-            # get value from next house
+        # without current
+        # get value from next house
         if i + 1 < len(houses):
             without_current = houses[i + 1]
         # use existing array to store max value
         houses[i] = max(with_current, without_current)
-        if (i == 0):
-            print(houses)
     return houses[0]
 
-
-h = [2, 7, 9, 3, 1]
-
-
-# print('max theft value: ',thievery(h))
+# print('max theft value: ',thievery([2, 7, 9, 3, 1]))
 
 
 def fib(n):
