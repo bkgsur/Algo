@@ -1,8 +1,6 @@
 import collections
 
 m = collections.namedtuple('match', ('team_a', 'team_b'))
-
-
 # O(matches)
 def can_team_a_beat_b(matches: [m], teama: str, teamb: str) -> bool:
     def is_path_dfs(curr: str, target: str, visited=None) -> bool:
