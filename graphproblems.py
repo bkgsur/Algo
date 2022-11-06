@@ -1,5 +1,5 @@
 import collections
-import helper
+import helper as h
 
 m = collections.namedtuple('match', ('team_a', 'team_b'))
 
@@ -125,8 +125,46 @@ def fill_enclosed_region() -> [[chr]]:
             # add adjacent elements of this 'W' item
             for adj in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                 q.append((x + adj[0], y + adj[1]))
-        helper.pm(board)
+        h.pm(board)
     return [['B' if board[i][j] != 'T' else 'W' for j in range(0, m)] for i in range(0, n)]
+
 
 # helper.pm(board)
 # helper.pm(fill_enclosed_region())
+
+# check if a vertex colored gray can reach another vertex colored gray
+def checkdeadlock(graph: dict) -> bool:
+    def has_cycle(curr: h.vertex) -> bool:
+        if curr.color == h.vertex.GRAY:
+            return True
+        curr.color = h.vertex.GRAY
+        if curr in graph:
+            if any(neighbor.color != h.vertex.BLACK and has_cycle(neighbor) for neighbor in
+                   graph[curr]):
+                return True
+        curr.color = h.vertex.BLACK
+        return False
+
+    return any(v.color == h.vertex.WHITE and has_cycle(v) for v in graph)
+
+
+# print(checkdeadlock(h.buildgraph()))
+
+
+def clonegraph(g: h.vertex) -> h.vertex:
+    if not g:
+        return None
+    q = collections.deque([g])
+    vertex_map = {g: h.vertex(g.n)}
+    while q:
+        v = q.popleft()
+        for e in v.edges:
+            if e not in vertex_map:
+                vertex_map[e] = h.vertex(e.n)
+                q.append(e)
+        vertex_map[v].edges.append(vertex_map[e])
+    return vertex_map[g]
+
+g1 = clonegraph(h.buildgraph2())
+h.printgraph(g1)
+
