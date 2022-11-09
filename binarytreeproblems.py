@@ -20,10 +20,11 @@
 
 class binarytreenode:
 
-    def __init__(self, data=None, left=None, right=None):
+    def __init__(self, data=None, left=None, right=None, parent=None):
         self.left = left
         self.right = right
         self.data = data
+        self.parent = parent
 
 
 def buildbinarytree(A: [], i: int = 0) -> binarytreenode:
@@ -77,12 +78,19 @@ def traverse(root: binarytreenode) -> None:
 def buildsymmetrictree() -> binarytreenode:
     r = binarytreenode(0)
     r.left = binarytreenode(1)
+    r.left.parent = r
     r.right = binarytreenode(1)
+    r.right.parent = r
 
     r.left.right = binarytreenode(2)
-    r.left.right.right = binarytreenode(3)
     r.right.left = binarytreenode(2)
+    r.left.right.parent = r.left
+    r.right.left.parent = r.right
+
     r.right.left.left = binarytreenode(3)
+    r.right.left.left.parent = r.right.left
+    r.left.right.right = binarytreenode(3)
+    r.left.right.right.parent = r.left.right
     return r
 
 
@@ -106,8 +114,8 @@ def issymmetric(tree: binarytreenode) -> bool:
 # print("\n")
 # print(issymmetric(t1))
 
-def lca(root: binarytreenode, p: int, q: int) -> binarytreenode:
-    if root.data == p or root.data == q:
+def lca(root: binarytreenode, p: binarytreenode, q: binarytreenode) -> binarytreenode:
+    if root.data == p.data or root.data == q.data:
         return root
     # leaf nodes
     if root.left is None and root.right is None:
@@ -126,6 +134,56 @@ def lca(root: binarytreenode, p: int, q: int) -> binarytreenode:
         return leftnode
 
 
-t1 = buildbinarytree([1, 2, 3, 4, 5, 6])
-# inordertraverse(t1)
-print(lca(t1, 2, 3).data)
+def lcawithparent(p: binarytreenode, q: binarytreenode) -> binarytreenode:
+    def getdepth(n: binarytreenode) -> int:
+        depth = 0
+        while n:
+            depth += 1
+            n = n.parent
+        return depth
+
+    depthp = getdepth(p)
+    depthq = getdepth(q)
+    depth_diff = abs(depthp - depthq)
+    # make sure p is the deeper node
+    if depthq > depthp:
+        p, q = q, p
+
+    while depth_diff > 0:
+        p = p.parent
+        depth_diff -= 1
+
+    while p.data != q.data:
+        print(p.data, q.data)
+        p, q = p.parent, q.parent
+        print("p", p)
+
+    return p
+
+
+# t1 = buildbinarytree([1, 2, 3, 4, 5, 6])
+# # inordertraverse(t1)
+# n1 = binarytreenode(2)
+# n2 = binarytreenode(3)
+# # print(lca(t1, n1, n2).data)
+# print(lcawithparent(t1.right, t1.left))
+
+
+def sumNumbers(root:binarytreenode)->int:
+
+    if root is None:
+        return 0
+
+    def helper(root, partial_sum=0, depth=10)->int:
+        if root is None:
+            return 0
+        partial_sum = partial_sum * depth + root.data
+        # print(partial_sum, depth)
+        if root.left is None and root.right is None:
+            return partial_sum
+
+        return helper(root.left, partial_sum, depth) + helper(root.right, partial_sum, depth)
+
+    return helper(root)
+t1 = buildbinarytree([1, 2, 3])
+print(sumNumbers(t1))
