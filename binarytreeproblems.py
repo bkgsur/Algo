@@ -115,6 +115,8 @@ def issymmetric(tree: binarytreenode) -> bool:
 # print(issymmetric(t1))
 
 def lca(root: binarytreenode, p: binarytreenode, q: binarytreenode) -> binarytreenode:
+    if root is None:
+        return None
     if root.data == p.data or root.data == q.data:
         return root
     # leaf nodes
@@ -154,9 +156,7 @@ def lcawithparent(p: binarytreenode, q: binarytreenode) -> binarytreenode:
         depth_diff -= 1
 
     while p.data != q.data:
-        print(p.data, q.data)
         p, q = p.parent, q.parent
-        print("p", p)
 
     return p
 
@@ -169,21 +169,21 @@ def lcawithparent(p: binarytreenode, q: binarytreenode) -> binarytreenode:
 # print(lcawithparent(t1.right, t1.left))
 
 
-def sumNumbers(root:binarytreenode)->int:
-
+def sumNumbers(root: binarytreenode) -> int:
     if root is None:
         return 0
 
-    def helper(root, partial_sum=0, depth=10)->int:
-        if root is None:
+    def helper(n, partial_sum=0) -> int:
+        if n is None:
             return 0
-        partial_sum = partial_sum * depth + root.data
+        partial_sum = partial_sum * 10 + n.data
         # print(partial_sum, depth)
-        if root.left is None and root.right is None:
+        if n.left is None and n.right is None:
             return partial_sum
-
-        return helper(root.left, partial_sum, depth) + helper(root.right, partial_sum, depth)
+        return helper(root.left, partial_sum) + helper(root.right, partial_sum)
 
     return helper(root)
+
+
 t1 = buildbinarytree([1, 2, 3])
 print(sumNumbers(t1))
