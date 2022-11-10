@@ -185,5 +185,5 @@ def sumNumbers(root: binarytreenode) -> int:
     return helper(root)
 
 
-t1 = buildbinarytree([1, 2, 3])
-print(sumNumbers(t1))
+# t1 = buildbinarytree([1, 2, 3])
+# print(sumNumbers(t1))
