@@ -3,6 +3,7 @@ import enchant
 import helper
 
 
+# 1
 # https://www.geeksforgeeks.org/find-maximum-possible-stolen-value-houses/
 # There are N houses built in a line, each of which contains some value in it.
 # A thief is going to steal the maximal value of these houses, but he can’t steal in two adjacent houses because the owner of the stolen houses
@@ -24,9 +25,10 @@ def thievery(houses):
         houses[i] = max(with_current, without_current)
     return houses[0]
 
+
 # print('max theft value: ',thievery([2, 7, 9, 3, 1]))
 
-
+# 2
 def fib(n):
     f_minus_2 = 0
     f_minus_1 = 1
@@ -41,7 +43,7 @@ def fib(n):
 
 # print(fib(10))
 
-
+# 3
 def maxsubarraysum(A):
     min_sum = max_sum = 0
     for running_sum in itertools.accumulate(A):
@@ -53,7 +55,7 @@ def maxsubarraysum(A):
 
 # print(maxsubarraysum([-904, -40, -523, -12, -335, -385, -124, -481, -31]))
 
-
+# 4
 def footballscore(score):
     points = [2, 3, 7]
     # make matrix to hold combos
@@ -76,7 +78,7 @@ def footballscore(score):
 
 # print(footballscore(12))
 
-
+# 5
 def climbstairs(n):
     if n == 1 or n == 2:
         return n
@@ -91,6 +93,8 @@ def climbstairs(n):
 
 # print(climbstairs(4))
 
+
+# 6
 def levensteindistance(word1, word2):
     print(word1)
     print(word2)
@@ -114,7 +118,7 @@ def levensteindistance(word1, word2):
 
 
 # print(levensteindistance('Saturday', 'Sundays'))
-
+# 7
 def waytoend(n, m):
     dp = [[0 for _ in range(m)] for _ in range(n)]
 
@@ -125,14 +129,14 @@ def waytoend(n, m):
             ways_from_top = 0 if x == 0 else helper(x - 1, y)
             ways_from_left = 0 if y == 0 else helper(x, y - 1)
             dp[x][y] = ways_from_top + ways_from_left
-        pm(dp)
+        helper.pm(dp)
         return dp[x][y]
 
     return helper(n - 1, m - 1)
 
 
 # print(waytoend(5, 5))
-
+# 8
 def choose_x(n, k):
     def helper(x, y):
         if y in (0, x):
@@ -149,6 +153,7 @@ def choose_x(n, k):
 
 # print(choose_x(5, 2))
 
+# 9
 def pattern_in_matix(A, S):
     def helper(x, y, offset):
         if len(S) == offset:
@@ -165,6 +170,7 @@ def pattern_in_matix(A, S):
 
 # print(pattern_in_matix([[1, 2, 3], [3, 4, 5], [5, 6, 7]], [1, 3, 4, 6]))
 
+# 10
 def knapsack(itemsvalue, itemsWeight, capacity):
     def helper(k, available_capacity):
         if available_capacity <= 0 or k < 0:
@@ -202,10 +208,10 @@ def knapsack1(itemsvalue, itemsWeight, capacity):
     return finalmax
 
 
-print(knapsack([60, 50, 70, 30], [5, 3, 4, 2], 5))
-print(knapsack1([60, 50, 70, 30], [5, 3, 4, 2], 5))
+# print(knapsack([60, 50, 70, 30], [5, 3, 4, 2], 5))
+# print(knapsack1([60, 50, 70, 30], [5, 3, 4, 2], 5))
 
-
+# 11
 def breakupwords(s):
     print('input: ', s, len(s))
     d = enchant.Dict("en_US")
@@ -232,4 +238,23 @@ def breakupwords(s):
 
     print(decompose)
 
+
 # breakupwords('bedbathandbeyond.com')
+
+# 12
+
+# Time Complexity: O(2^n)
+# Space Complexity: O(n) , Because of the recursion stack.
+def longest_subsequence(A: [int]) -> [int]:
+    n: int = len(A)
+    max_length = [1] * n
+    for i in range(1, n):
+        max_length[i] = max(1 + max([max_length[j] for j in range(0, i) if A[j] <= A[i]], default=0), max_length[i])
+
+    return max(max_length)
+
+
+# A = [0, 8, 4, 12, 2, 10, 6, 14, 1, 9]
+# print(longest_subsequence(A))
+
+
