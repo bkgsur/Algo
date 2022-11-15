@@ -101,7 +101,34 @@ def dutchflag(A: [int], pindex: int) -> None:
 # dutchflag(A,1)
 # print(A)
 
+def tictactoe(moves):
+    if len(moves) < 5:
+        return "Pending"
 
+    def check(startIndex, player):
+        cols = set()
+        rows = set()
+        diag = True
+        move_count = 0
+        for i in range(startIndex, len(moves), 2):
+            move = moves[i]
+            cols.add(move[1])
+            rows.add(move[0])
+            move_count += 1
+            if diag:
+                diag = move[0] == move[1] or (move[0] + move[1] == 2)
+            # print(move,diag,cols,rows, player)
+        if (diag == True or len(cols) == 1 or len(rows) == 1) and move_count == 3:
+            return True
+        return False
+
+        if check(0, "A"):
+            return "A"
+        if check(1, "B"):
+            return "B"
+        if len(moves) == 9:
+            return "Draw"
+        return "Pending"
 def incrementby1(A: [int]) -> None:
     A[-1] += 1
     for i in reversed(range(1, len(A))):
