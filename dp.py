@@ -258,3 +258,5 @@ def longest_subsequence(A: [int]) -> [int]:
 # print(longest_subsequence(A))
 
 
+
+

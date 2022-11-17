@@ -146,25 +146,3 @@ def incrementby1(A: [int]) -> None:
 # incrementby1(A)
 # print(A)
 
-def largestsubarray(A: [int]) -> (int, [int]):
-    n = len(A)
-    minIndex=-1
-    maxIndex=-1
-    maxsum = float('-inf')
-    def helper(i,maxsum):
-        print(maxsum)
-        if i == n:
-            return maxsum
-        currentsum=0
-        for j in range(i, n):
-            currentsum+=A[j]
-            if currentsum>maxsum:
-                maxsum = currentsum
-
-        helper(i+1, maxsum)
-    maxsum = helper(0,maxsum)
-    print(maxsum)
-
-
-
-largestsubarray([-2, 1, 6, 8, -20, 7])
