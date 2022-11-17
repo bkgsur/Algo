@@ -129,6 +129,8 @@ def tictactoe(moves):
         if len(moves) == 9:
             return "Draw"
         return "Pending"
+
+
 def incrementby1(A: [int]) -> None:
     A[-1] += 1
     for i in reversed(range(1, len(A))):
@@ -138,7 +140,31 @@ def incrementby1(A: [int]) -> None:
     if A[0] == 10:
         A[0] = 1
         A.append(0)
+
+
 # A = [9, 9, 9]
 # incrementby1(A)
 # print(A)
 
+def largestsubarray(A: [int]) -> (int, [int]):
+    n = len(A)
+    minIndex=-1
+    maxIndex=-1
+    maxsum = float('-inf')
+    def helper(i,maxsum):
+        print(maxsum)
+        if i == n:
+            return maxsum
+        currentsum=0
+        for j in range(i, n):
+            currentsum+=A[j]
+            if currentsum>maxsum:
+                maxsum = currentsum
+
+        helper(i+1, maxsum)
+    maxsum = helper(0,maxsum)
+    print(maxsum)
+
+
+
+largestsubarray([-2, 1, 6, 8, -20, 7])

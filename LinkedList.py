@@ -67,14 +67,14 @@ def test():
 
 # test()
 
-l1 = LinkedList()
-l1.create(d=[1, 3, 5, 7, 9, 11, 13, 15])
-l2 = LinkedList()
-l2.create(d=[2, 4, 6, 8, 10, 12, 14])
-l3 = LinkedList()
-l3.create(d=[i for i in range(1, 15)])
+# l1 = LinkedList()
+# l1.create(d=[1, 3, 5, 7, 9, 11, 13, 15])
+# l2 = LinkedList()
+# l2.create(d=[2, 4, 6, 8, 10, 12, 14])
+# l3 = LinkedList()
+# l3.create(d=[i for i in range(1, 15)])
 
-
+#1
 def mergell(l1: LinkedList, l2: LinkedList) -> LinkedList:
     n: ListNode = ListNode()
     ll: LinkedList = LinkedList()
@@ -98,7 +98,7 @@ def mergell(l1: LinkedList, l2: LinkedList) -> LinkedList:
 
 
 # print(mergell(l1,l2))
-
+#2
 def reversesublist(ll: LinkedList, s: int, f: int) -> LinkedList:
     dummyhead = sublisthead = ll.head
     if ll.head:
@@ -113,4 +113,10 @@ def reversesublist(ll: LinkedList, s: int, f: int) -> LinkedList:
     return ll
 
 
-print(reversesublist(l3, 4, 7))
+#print(reversesublist(l3, 4, 7))
+
+# 3
+l1 = LinkedList()
+l1.create(d=[1, 3, 5, 7, 9, 11, 13, 15])
+print(l1.head.data)
+# def has_cycle()
