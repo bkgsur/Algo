@@ -163,9 +163,9 @@ def kcloseset(A,k,target):
 
     return A[l:l+k]
 A = [1,2,3,4,5]
-k=4
-print(kcloseset(A,2,5))
-print(kcloseset(A,k,-1))
+# k=4
+# print(kcloseset(A,2,5))
+# print(kcloseset(A,k,-1))
 
 
 
