@@ -151,21 +151,133 @@ def splitarraylargestsum(A, k) -> int:
 # 658. Find K Closest Elements
 # A is sorted
 # T - log n-k
-def kcloseset(A,k,target):
-    l =0
-    r = len(A)-k-1
-    while l<r:
-        mid = l + (r-l)//2
-        if target - A[mid]> A[mid]-target:
-            l = mid+1
+def kcloseset(A, k, target):
+    l = 0
+    r = len(A) - k - 1
+    while l < r:
+        mid = l + (r - l) // 2
+        if target - A[mid] > A[mid] - target:
+            l = mid + 1
         else:
             r = mid
 
-    return A[l:l+k]
-A = [1,2,3,4,5]
+    return A[l:l + k]
+
+
+A = [1, 2, 3, 4, 5]
+
+
 # k=4
 # print(kcloseset(A,2,5))
 # print(kcloseset(A,k,-1))
 
+# 153. Find Minimum in Rotated Sorted Array - unique elements
+# 154. Find Minimum in Rotated Sorted Array - dupliactes possible
+def findMin(nums):
+    left = 0
+    right = len(nums) - 1
+    minvalue = float('inf')
+    while left <= right:
+        mid = left + (right - left >> 1)
+        # print(left,mid,right,minvalue)
+        if nums[mid] > nums[right]:  # move right
+            left = mid + 1
+            minvalue = min(nums[right], minvalue)
+        elif nums[mid] < nums[right]:
+            right = mid - 1
+            minvalue = min(nums[mid], minvalue)
+        else:  # duplicate
+            right = right - 1
+            minvalue = min(nums[mid], minvalue)
+    return minvalue
 
 
+# print(findMin([4, 4, 5, 6, 6, 7, 0, 0, 1, 2, 4]))
+# print(findMin([0, 1, 2, 4, 5, 6, 7]))
+# print(findMin([3, 1, 2]))
+# print(findMin([3, 3, 1, 3]))
+
+
+# 240.Search a 2D Matrix II
+# Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+#
+# Integers in each row are sorted in ascending from left to right.
+# Integers in each column are sorted in ascending from top to bottom.
+# mlogn
+def searchMatrix(matrix, target):
+    def checkcolumn(index):
+        left_col = 0
+        right_col = len(matrix[0]) - 1
+        while left_col <= right_col:
+            midpoint_col = left_col + (right_col - left_col) // 2
+            currentitem = matrix[index][midpoint_col]
+            if currentitem == target:
+                return True
+            elif currentitem > target:
+                right_col = midpoint_col - 1
+            else:
+                left_col = midpoint_col + 1
+        return False
+
+    for i in range(len(matrix)):
+        if checkcolumn(i):
+            return True
+    return False
+
+
+# m = [[1, 4, 7, 11, 15], [2, 5, 8, 12, 19], [3, 6, 9, 16, 22], [10, 13, 14, 17, 24], [18, 21, 23, 26, 30]]
+# print(searchMatrix(m, 5))
+# print(searchMatrix(m, 75))
+# m = [[-1,3]]
+# print(searchMatrix(m, 3))
+
+
+# 34. Find First and Last Position of Element in Sorted Array
+
+def searchRange(nums, target):
+    left = 0
+    right = len(nums) - 1
+    firstindex = -1
+    lastindex = -1
+
+    def search(l, r, direction):
+        result=0
+        if direction == 'L':
+            result =r
+        else:
+            result=l
+        while l <= r:
+            m = l + (r - l) // 2
+            if nums[m] == target:
+                if direction == 'L':
+                    r -= 1
+                    result=r
+                else:
+                    l += 1
+                    result=l
+            elif nums[m] < target:
+                l = mid + 1
+            else:
+                r = mid - 1
+            # print(l, m, r, nums[mid])
+
+        return result
+
+
+    while left <= right:
+        mid = left + (right - left) // 2
+        # print(left, mid, right)
+        if nums[mid] == target:
+            firstindex = search(left, mid, "L")
+            lastindex = search(mid, right, "R")
+            return firstindex, lastindex
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return -1, -1
+
+
+print(searchRange([5, 7, 7, 8, 8, 10], 8))
+print(searchRange([5, 7, 7, 8, 8, 10], 6))
